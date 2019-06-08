@@ -1,0 +1,20 @@
+.DS_Store
+client/build/
+client/dist/
+
+.vscode
+
+# python project files
+__pycache__/
+*.egg
+*.egg-info
+.env
+env
+env*
+*.pyc
+*.pyo
+venv/
+
+# npm files
+npm-debug.log
+node_modules/
