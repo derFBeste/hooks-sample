@@ -1,11 +1,9 @@
 from app import app, db
 from flask_restplus import Api, Resource
 import sqlite3
-# from marshmallow_sqlalchemy import ModelSchema
 
 from app.models import Message, Source
 from app.schema import MessageSchema, SourceSchema
-
 
 api = Api(app)
 
@@ -14,10 +12,6 @@ api = Api(app)
 # localhost:8888/source/:id/message
 # localhost:8888/message
 # localhost:8888/message/:mid
-
-# class MessageSchema(ModelSchema):
-#     class Meta:
-#         model = Message
 
 message_schema = MessageSchema()
 messages_schema = MessageSchema(many=True)
@@ -44,6 +38,13 @@ class GetSources(Resource):
         return sources_schema.dump(sources).data
 
 @api.route('/source/<string:id>')
+class GetSource(Resource):
+    def get(self, id):
+        # 80fe6e1e-6f1b-4b3c-957c-275d12bb3e48
+        source = Source.query.get(id)
+        return source_schema.dump(source).data
+
+@api.route('/source/<string:id>/')
 class GetSource(Resource):
     def get(self, id):
         # 80fe6e1e-6f1b-4b3c-957c-275d12bb3e48
