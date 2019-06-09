@@ -10,10 +10,10 @@ interface Props {
 
 const Sources = (props: Props) => {
   const columns = [
-    {
-      Header: 'Id',
-      accessor: 'id',
-    },
+    // {
+    //   Header: 'Id',
+    //   accessor: 'id',
+    // },
     {
       Header: 'Name',
       accessor: 'name',
@@ -22,10 +22,10 @@ const Sources = (props: Props) => {
       Header: 'Environment',
       accessor: 'environment',
     },
-    {
-      Header: 'Encoding',
-      accessor: 'encoding',
-    },
+    // {
+    //   Header: 'Encoding',
+    //   accessor: 'encoding',
+    // },
     {
       Header: 'Created',
       accessor: 'created_at',
@@ -34,17 +34,17 @@ const Sources = (props: Props) => {
       Header: 'Updated',
       accessor: 'updated_at',
     },
-    {
-      Header: 'Deleted',
-      accessor: 'deleted_at',
-    },
+    // {
+    //   Header: 'Deleted',
+    //   accessor: 'deleted_at',
+    // },
   ]
 
   
   
   
   return (
-    <section className='ba b--pink h5 ma3'>
+    <section className='ba b--purple ma3'>
       <ReactTable 
         columns={columns}
         data={props.input}

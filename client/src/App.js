@@ -26,7 +26,7 @@ function App() {
   return (
     <div>
       <header>
-        <div className="f2 b bb b--silver pa2">really cool dashboard</div>
+        <div className="f3 white bg-black-80 b bb b--silver pa2">source & message dashboard</div>
       </header>
       <Sources 
         input={sources}

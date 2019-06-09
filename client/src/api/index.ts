@@ -9,3 +9,7 @@ export function getSources() {
 export function getSourceInfo(id: string) {
   return axios.get(`${URL}/source/${id}`)
 }
+
+export function getSourceMessages(sourceId: string) {
+  return axios.get(`${URL}/source/${sourceId}/messages`)
+}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ReactTable from 'react-table'
-import { getSourceInfo } from '../../api'
+import { getSourceMessages } from '../../api'
 
 import { TSource } from '../../types';
 
@@ -10,20 +10,20 @@ interface Props {
 
 const Source = (props: Props) => {
   const columns = [
-    {
-      Header: 'Id',
-      accessor: 'id',
-    },
-    {
-      Header: 'Source Id',
-      accessor: 'source_id',
-    },
+    // {
+    //   Header: 'Id',
+    //   accessor: 'id',
+    // },
+    // {
+    //   Header: 'Source Id',
+    //   accessor: 'source_id',
+    // },
     {
       Header: 'Message',
       accessor: 'message',
     },
     {
-      Header: 'status',
+      Header: 'Status',
       accessor: 'status',
     },
     {
@@ -34,40 +34,43 @@ const Source = (props: Props) => {
       Header: 'Updated',
       accessor: 'updated_at',
     },
-    {
-      Header: 'Deleted',
-      accessor: 'deleted_at',
-    },
+    // {
+    //   Header: 'Deleted',
+    //   accessor: 'deleted_at',
+    // },
   ]
 
-  const [sourceInfo, setSourceInfo] = useState()
+  const [sourceMessages, setSourceMessages] = useState()
+  const [loading, setLoadingStatus] = useState(false)
 
   useEffect(() => {
-    const fetchSourceInfo = async () => {
+    const fetchSourceMessages = async () => {
       if(props.input.id){
-        const result = await getSourceInfo(props.input.id)
-        setSourceInfo(result.data)
-        console.log(sourceInfo)
+        setLoadingStatus(true)
+        const result = await getSourceMessages(props.input.id)
+        setSourceMessages(result.data)
+        setLoadingStatus(false)
       }
     }
-    fetchSourceInfo()
+    fetchSourceMessages()
   }, [props.input])
 
   return (
-    <section className='ba b--purple h5 ma3'>
+    <section className='ba b--purple ma3'>
       <div className='f4 h2 bg-light-gray pv1 ph2'>{props.input.name}</div>
-      <ReactTable 
-        columns={columns}
-        data={sourceInfo}
-        minRows={1}
-        showPagination={false}
-      />
+      <div className='flex flex-row'>
+        <div className='h5 w5 ba b--black' />
+        <ReactTable
+          className='w-100'
+          columns={columns}
+          data={sourceMessages}
+          minRows={3}
+          loading={loading}
+          defaultPageSize={10}
+        />
+      </div>
     </section>
   )
 }
-
-// Source.defaultProps = {
-//   input: {}
-// }
 
 export default Source
