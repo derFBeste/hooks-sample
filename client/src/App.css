@@ -31,3 +31,8 @@
     transform: rotate(360deg);
   }
 }
+
+.rt-tr-group:hover {
+  cursor: pointer;
+  opacity: .5;
+}

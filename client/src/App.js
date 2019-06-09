@@ -1,24 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
 import './App.css';
+import Sources from './components/sections/Sources'
+import Source from './components/sections/Source'
+import { getSources } from './api'
 
 function App() {
+  const [sources, setSources] = useState([])
+  const [sourceSelection, setSourceSelection] = useState({})
+  
+  useEffect(() => {
+    const fetchSource = async () => {
+      const result = await getSources()
+      setSources(result.data)
+    }
+    fetchSource()
+  }, [])
+
+
+
+  const handleRowClick = (rowInfo) => {
+    console.log(rowInfo)
+    setSourceSelection(rowInfo)
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <div>
+      <header>
+        <div className="f2 b bb b--silver pa2">really cool dashboard</div>
       </header>
+      <Sources 
+        input={sources}
+        onRowClick={handleRowClick}
+      />
+      <Source 
+        input={sourceSelection}
+      />
     </div>
   );
 }
