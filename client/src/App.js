@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import Sources from './components/sections/Sources'
-import Source from './components/sections/Source'
+import Sources from './components/Sources'
+import Source from './components/Source'
 import { getSources } from './api'
 
 function App() {
@@ -16,8 +16,6 @@ function App() {
     fetchSource()
   }, [])
 
-
-
   const handleRowClick = (rowInfo) => {
     console.log(rowInfo)
     setSourceSelection(rowInfo)
@@ -26,7 +24,7 @@ function App() {
   return (
     <div>
       <header>
-        <div className="f3 white bg-black-80 b bb b--silver pa2">source & message dashboard</div>
+        <div className="f3 white bg-black-80 b bb b--silver pa2">sources & message dashboard</div>
       </header>
       <Sources 
         input={sources}

@@ -7,3 +7,7 @@ export type TSource = {
   name: string,
   updated_at: string
 }
+
+export type TStatus = {
+  [key: string] : number
+}

@@ -35,4 +35,9 @@
 .rt-tr-group:hover {
   cursor: pointer;
   opacity: .5;
+  transition: opacity .15s ease-in;
+}
+
+.h-inherit {
+  height: inherit;
 }

@@ -1,6 +1,9 @@
 from flask import request, Response
 from flask_restplus import Api, Resource, fields
 import sqlite3
+from collections import Counter
+
+import time # TODO: remove
 
 from app import app, db
 from app.models import Message, Source
@@ -72,20 +75,41 @@ class SourceController(Resource):
 @api.route('/source/<string:source_id>/messages')
 class GetSourceMessages(Resource):
     def get(self, source_id):
+        start = time.time()
         # testing id: 80fe6e1e-6f1b-4b3c-957c-275d12bb3e48
         # TODO: make more perfomant, sessions?
         messages = Message.query.all()
         source_messages = [m for m in messages if m.source_id == source_id]
+
+        end = time.time()
+        print('source message time: ', end - start)
         return messages_schema.dump(source_messages).data
 
 @api.route('/source/<string:source_id>/messages/status')
 class GetSourceMessages(Resource):
     def get(self, source_id):
+
+        start = time.time()
         # testing id: 80fe6e1e-6f1b-4b3c-957c-275d12bb3e48
-        # TODO: make more perfomant, sessions?
         messages = Message.query.all()
         source_messages = [m for m in messages if m.source_id == source_id]
-        return messages_schema.dump(source_messages).data
+        statuses = [sm.status for sm in source_messages]
+        count = Counter()
+        for status in statuses:
+            count[status] += 1
+
+        end = time.time()
+        print('status time: ', end - start)
+        temp_result = dict(count)
+
+        status_types = ['enqueued', 'processing', 'finished', 'error']
+        # TODO: add any other status types that may be in db
+
+        ordered_result = {}
+        for t in status_types:
+            ordered_result[t] = temp_result[t]
+
+        return ordered_result
 
 # TODO: auto generate id
 # source_model = api.model('Source Model', {
