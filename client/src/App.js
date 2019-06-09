@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import './App.css';
+import React, { useState, useEffect } from 'react'
+import './App.css'
 import Sources from './components/Sources'
 import Source from './components/Source'
 import { getSources } from './api'

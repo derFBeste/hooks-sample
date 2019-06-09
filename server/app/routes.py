@@ -1,8 +1,8 @@
-from flask import request, Response
-from flask_restplus import Api, Resource, fields
+from flask import request, Response, jsonify
+from flask_restplus import Api, Resource, fields, ValidationError
 import sqlite3
 from collections import Counter
-
+import uuid
 import time # TODO: remove
 
 from app import app, db
@@ -10,6 +10,13 @@ from app.models import Message, Source
 from app.schema import MessageSchema, SourceSchema
 
 api = Api(app)
+
+# TODO: auto generate id
+source_model = api.model('Source', {
+    'name' : fields.String(),
+    'environment' : fields.String(),
+    'encoding' : fields.String(),
+})
 
 # localhost:8888/source  
 # localhost:8888/source/:id
@@ -35,17 +42,25 @@ class GetMessage(Resource):
         message = Message.query.get(id)
         return message_schema.dump(message).data
 
+# source_fields = {}
+
 @api.route('/source')
 class GetSources(Resource):
     def get(self):
         sources = Source.query.all()
         return sources_schema.dump(sources).data
 
+    @api.expect(source_model)
     def post(self):
-        # source = request.get_json()
+        
         try:
+            source = Source(**request.json)
+            source.id = str(uuid.uuid1())
+            
+            db.session.add(source)
+            db.session.commit()
             # TODO: return new record
-            return {}
+            return source_schema.dump(source).data
         except ValidationError as err:
             return jsonify(err.messages), 422
 
@@ -102,22 +117,14 @@ class GetSourceMessages(Resource):
         print('status time: ', end - start)
         temp_result = dict(count)
 
-        status_types = ['enqueued', 'processing', 'finished', 'error']
-        # TODO: add any other status types that may be in db
+        status_types = ['enqueued', 'processing', 'finished', 'error'] # used for ordering statuses
+        # TODO: add to the end any other status types that may be in db
 
         ordered_result = {}
         for t in status_types:
             ordered_result[t] = temp_result[t]
 
         return ordered_result
-
-# TODO: auto generate id
-# source_model = api.model('Source Model', {
-#     'say' : fields.String
-# })
-
-# source_fields = {}
-
 
 @api.route('/health-check')
 class Test(Resource):

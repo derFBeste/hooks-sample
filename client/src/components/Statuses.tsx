@@ -34,6 +34,11 @@ const Statuses = (props: Props) => {
         <div>{total}</div>
       </div>
       {statuses}
+      <a className="fr f6 link dim ba ph3 pv2 mb2 dib black ma2" href="#0"
+        onClick={() => props.onClickStatus('')}
+      >
+        Clear Filter
+      </a>
     </div>
   )
 }
