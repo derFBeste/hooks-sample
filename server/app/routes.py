@@ -1,7 +1,8 @@
-from app import app, db
-from flask_restplus import Api, Resource
+from flask import request, Response
+from flask_restplus import Api, Resource, fields
 import sqlite3
 
+from app import app, db
 from app.models import Message, Source
 from app.schema import MessageSchema, SourceSchema
 
@@ -37,19 +38,61 @@ class GetSources(Resource):
         sources = Source.query.all()
         return sources_schema.dump(sources).data
 
+    def post(self):
+        # source = request.get_json()
+        try:
+            # TODO: return new record
+            return {}
+        except ValidationError as err:
+            return jsonify(err.messages), 422
+
 @api.route('/source/<string:id>')
-class GetSource(Resource):
+class SourceController(Resource):
     def get(self, id):
         # 80fe6e1e-6f1b-4b3c-957c-275d12bb3e48
         source = Source.query.get(id)
         return source_schema.dump(source).data
 
-@api.route('/source/<string:id>/')
-class GetSource(Resource):
-    def get(self, id):
-        # 80fe6e1e-6f1b-4b3c-957c-275d12bb3e48
-        source = Source.query.get(id)
-        return source_schema.dump(source).data
+    def put(self, id):
+        try:
+            # TODO: update record
+            return 'success'
+        except ValidationError as err:
+            return jsonify(err.messages), 422
+
+    def delete(self, id):
+        try:
+            # TODO: delete record
+            return 'success'
+        except ValidationError as err:
+            return jsonify(err.messages), 422
+        
+# TODO: use a session to make querying messages more performant
+
+@api.route('/source/<string:source_id>/messages')
+class GetSourceMessages(Resource):
+    def get(self, source_id):
+        # testing id: 80fe6e1e-6f1b-4b3c-957c-275d12bb3e48
+        # TODO: make more perfomant, sessions?
+        messages = Message.query.all()
+        source_messages = [m for m in messages if m.source_id == source_id]
+        return messages_schema.dump(source_messages).data
+
+@api.route('/source/<string:source_id>/messages/status')
+class GetSourceMessages(Resource):
+    def get(self, source_id):
+        # testing id: 80fe6e1e-6f1b-4b3c-957c-275d12bb3e48
+        # TODO: make more perfomant, sessions?
+        messages = Message.query.all()
+        source_messages = [m for m in messages if m.source_id == source_id]
+        return messages_schema.dump(source_messages).data
+
+# TODO: auto generate id
+# source_model = api.model('Source Model', {
+#     'say' : fields.String
+# })
+
+# source_fields = {}
 
 
 @api.route('/health-check')
