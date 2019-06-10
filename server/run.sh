@@ -14,7 +14,4 @@ case "$COMMAND" in
     install)
         pip3 install -e .
     ;;
-
 esac
-
-# TODO: add env-actviate option: . venv/bin/activate
