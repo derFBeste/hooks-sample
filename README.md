@@ -42,4 +42,57 @@ The expected time commitment for this activity is around 5-10 hours. If you find
 ### Submission 
 
 1) Send us a link to the forked repo on your personal GitHub account.
-2) Zip/Tar the contents of your final project directory and send it to us via a Dropbox or Google Drive link.  
+2) Zip/Tar the contents of your final project directory and send it to us via a Dropbox or Google Drive link.
+
+
+# SPA Implementation
+
+## Server
+
+The server was uses Python 3 with [Flask](http://flask.pocoo.org/). Below are the instructions for running it although this probably only works on Mac.
+
+### Running the server:
+
+#### Go to the server directory:
+```
+cd server
+```
+
+#### To activate virtual environment:
+```
+. venv/bin/activate
+```
+
+#### To Install dependencies:
+```
+pip3 install -r requirements.txt
+```
+
+#### To run server
+```
+./run.sh dev
+```
+
+This should run a flask server on port 8888. You can see Open API docs on http://localhost:8888/ .
+
+
+## Client
+
+The client is implemented with React and Typescript. Generated with [create-react-app](https://github.com/facebook/create-react-app).
+
+### Running the frontend:
+
+#### Go to the client directory:
+```
+cd client
+```
+
+#### Install the packages via npm:
+```
+npm install
+```
+
+#### Start the app:
+```
+npm start
+```
