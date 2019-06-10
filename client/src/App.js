@@ -17,7 +17,6 @@ function App() {
   }, [])
 
   const handleRowClick = (rowInfo) => {
-    console.log(rowInfo)
     setSourceSelection(rowInfo)
   }
 

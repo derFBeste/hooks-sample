@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import ReactTable from 'react-table'
 import { TSource } from '../types';
 
@@ -10,10 +10,6 @@ interface Props {
 
 const Sources = (props: Props) => {
   const columns = [
-    // {
-    //   Header: 'Id',
-    //   accessor: 'id',
-    // },
     {
       Header: 'Name',
       accessor: 'name',
@@ -22,10 +18,6 @@ const Sources = (props: Props) => {
       Header: 'Environment',
       accessor: 'environment',
     },
-    // {
-    //   Header: 'Encoding',
-    //   accessor: 'encoding',
-    // },
     {
       Header: 'Created',
       accessor: 'created_at',
@@ -33,24 +25,15 @@ const Sources = (props: Props) => {
     {
       Header: 'Updated',
       accessor: 'updated_at',
-    },
-    // {
-    //   Header: 'Deleted',
-    //   accessor: 'deleted_at',
-    // },
+    }
   ]
-
-  
-  const [sourceSelection, setSourceSelection] = useState({})
   
   const handleRowClick = (row) => {
-    setSourceSelection(row)
     props.onRowClick(row)
-    console.log(sourceSelection)
   }
   
   return (
-    <section className='ba b--purple ma3'>
+    <section className='ba b--black ma3'>
       <div className='f4 h2 bg-light-gray pv1 ph2'>Sources</div>
       <ReactTable 
         columns={columns}
@@ -60,7 +43,6 @@ const Sources = (props: Props) => {
         getTdProps={(state, rowInfo, column, instance)=> {
           return {
             onClick: (e, handleOriginal) => {
-              // props.onRowClick(rowInfo.original)
               handleRowClick(rowInfo.original)
               if(handleOriginal){
                 handleOriginal()

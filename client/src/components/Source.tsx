@@ -13,14 +13,6 @@ interface Props {
 
 const Source = (props: Props) => {
   const columns = [
-    // {
-    //   Header: 'Id',
-    //   accessor: 'id',
-    // },
-    // {
-    //   Header: 'Source Id',
-    //   accessor: 'source_id',
-    // },
     {
       Header: 'Message',
       accessor: 'message',
@@ -36,11 +28,7 @@ const Source = (props: Props) => {
     {
       Header: 'Updated',
       accessor: 'updated_at',
-    },
-    // {
-    //   Header: 'Deleted',
-    //   accessor: 'deleted_at',
-    // },
+    }
   ]
 
   const [loading, setLoadingStatus] = useState(false)
@@ -54,13 +42,9 @@ const Source = (props: Props) => {
         const statusesRes = await getSourceMessagesStatus(props.input.id)
         setSourceStatuses(statusesRes.data)
         setLoadingStatus(true)
-        console.time('get messages')
         const messagesRes = await getSourceMessages(props.input.id)
-        console.timeEnd('get messages')
         setSourceMessages(messagesRes.data)
         setLoadingStatus(false)
-
-        console.log(sourceStatuses)
       }
 
     }
@@ -72,7 +56,7 @@ const Source = (props: Props) => {
   }
 
   return (
-    <section className='ba b--purple ma3'>
+    <section className='ba b--black ma3'>
       <div className='f4 h2 bg-light-gray pv1 ph2'>{props.input.name}</div>
       <div className='flex flex-row'>
         { !isEmpty(sourceStatuses) &&
