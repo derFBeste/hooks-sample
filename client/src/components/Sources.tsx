@@ -19,6 +19,10 @@ const Sources = (props: Props) => {
       accessor: 'environment',
     },
     {
+      Header: 'Encoding',
+      accessor: 'encoding',
+    },
+    {
       Header: 'Created',
       accessor: 'created_at',
     },
