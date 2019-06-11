@@ -58,7 +58,16 @@ The server was uses Python 3 with [Flask](http://flask.pocoo.org/). Below are th
 cd server
 ```
 
-#### To activate virtual environment:
+#### Install a virtual env:
+
+This requires Python 3. If you have that install `venv` is included in the standard library.
+
+```
+python -m virtualenv venv
+```
+
+
+#### Activate virtual environment:
 ```
 . venv/bin/activate
 ```
